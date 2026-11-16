@@ -1,0 +1,32 @@
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+button,
+a {
+  font-family: inherit;
+}
+
+::selection {
+  background: #896bff;
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070710;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6045bb;
+  border-radius: 10px;
+}
