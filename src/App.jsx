@@ -1,71 +1,77 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
+  ArrowDown,
+  ArrowRight,
   Mail,
-  ArrowUpRight,
-  Code2,
-  Brain,
-  Globe,
-  GraduationCap,
-  Award,
   MapPin,
-  Terminal,
-  Database,
-  Layers,
+  Code2,
+  Sparkles,
+  GraduationCap,
+  ExternalLink,
+  Menu,
+  X,
+  Phone,
 } from "lucide-react";
 import "./App.css";
+
+const contact = {
+  phone: "+91 7483106110",
+  phoneLink: "tel:+917483106110",
+  email: "the.only.shashank.78@gmail.com",
+  emailLink: "mailto:the.only.shashank.78@gmail.com",
+  github: "https://github.com/Shashank74831",
+  linkedin: "https://www.linkedin.com/in/shashank-r-034b8b43a/",
+};
 
 const skills = [
   "Python",
   "C++",
   "JavaScript",
-  "HTML",
-  "CSS",
-  "React.js",
   "Node.js",
   "Express.js",
   "MongoDB",
-  "SQL",
-  "Git",
-  "GitHub",
+  "HTML",
+  "CSS",
+  "Git & GitHub",
+  "React.js (Learning)",
 ];
 
 const projects = [
   {
     number: "01",
-    title: "CineBook",
-    category: "Full Stack Web Application",
+    name: "CODEGENESIS X",
+    category: "AI Intelligence Engine",
     description:
-      "A movie booking web application built to manage movie listings and booking-related functionality.",
-    technologies: ["Node.js", "Express.js", "MongoDB"],
-    icon: Globe,
-    status: "Project",
+      "An AI-powered code repair and troubleshooting project. My contribution focuses on the AI Intelligence Engine, built with Python and FastAPI.",
+    tags: ["Python", "FastAPI", "AI/ML"],
+    status: "In development",
   },
   {
     number: "02",
-    title: "Cat Image API",
-    category: "API Integration",
+    name: "CineBook",
+    category: "Web Application",
     description:
-      "An application that integrates an external API to fetch and display cat images dynamically.",
-    technologies: ["HTML", "CSS", "JavaScript", "API"],
-    icon: Code2,
+      "A movie booking platform developed using Node.js, Express.js and MongoDB.",
+    tags: ["Node.js", "Express.js", "MongoDB"],
     status: "Project",
   },
   {
     number: "03",
-    title: "CODEGENESIS X",
-    category: "AI Intelligence Engine",
+    name: "Cat Image API",
+    category: "API Integration",
     description:
-      "An AI-powered project focused on intelligent bug classification and software development assistance. Currently under development.",
-    technologies: ["Python", "AI/ML", "FastAPI"],
-    icon: Brain,
-    status: "In Development",
+      "A web project that uses an API to fetch and display random cat images.",
+    tags: ["HTML", "CSS", "JavaScript", "API"],
+    status: "Project",
   },
 ];
 
 const certifications = [
+  "IBM AI Foundations",
   "Getting Started with Generative AI",
-  "Artificial Intelligence Fundamentals",
   "Project Management Fundamentals",
+  "Artificial Intelligence Fundamentals",
 ];
 
 const fadeUp = {
@@ -73,364 +79,435 @@ const fadeUp = {
   visible: { opacity: 1, y: 0 },
 };
 
-function SectionHeading({ eyebrow, title, highlight }) {
+function SectionHeading({ eyebrow, title, description }) {
   return (
-    <div className="section-heading">
-      <p className="eyebrow">{eyebrow}</p>
-      <h2>
-        {title} <span>{highlight}</span>
-      </h2>
-    </div>
+    <motion.div
+      className="section-heading"
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.65 }}
+    >
+      <span className="eyebrow">{eyebrow}</span>
+      <h2>{title}</h2>
+      {description && <p>{description}</p>}
+    </motion.div>
   );
 }
 
 function App() {
-  return (
-    <div className="portfolio">
+  const [menuOpen, setMenuOpen] = useState(false);
 
-      {/* NAVBAR */}
-      <header className="navbar">
-        <a href="#home" className="logo">
-          SR<span>.</span>
+  const navLinks = [
+    ["About", "#about"],
+    ["Skills", "#skills"],
+    ["Projects", "#projects"],
+    ["Education", "#education"],
+    ["Certifications", "#certifications"],
+    ["Contact", "#contact"],
+  ];
+
+  return (
+    <main>
+      <div className="ambient ambient-one" />
+      <div className="ambient ambient-two" />
+      <div className="ambient ambient-three" />
+      <div className="grain" />
+
+      <header className="navbar glass">
+        <a href="#home" className="brand">
+          <span className="brand-mark">S.R</span>
+          <span>Shashank .R</span>
         </a>
 
-        <nav className="nav-links">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#projects">Projects</a>
-          <a href="#education">Education</a>
-          <a href="#contact">Contact</a>
+        <button
+          className="menu-toggle"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle navigation"
+        >
+          {menuOpen ? <X /> : <Menu />}
+        </button>
+
+        <nav className={menuOpen ? "nav-links open" : "nav-links"}>
+          {navLinks.map(([label, href]) => (
+            <a
+              key={label}
+              href={href}
+              onClick={() => setMenuOpen(false)}
+            >
+              {label}
+            </a>
+          ))}
         </nav>
 
-        <a href="#contact" className="nav-button">
-          Let's Talk <ArrowUpRight size={16} />
+        <a className="nav-cta" href="#contact">
+          Let's Connect <ArrowRight size={16} />
         </a>
       </header>
 
-      {/* HERO */}
-      <section className="hero" id="home">
+      <section className="hero page-width" id="home">
         <motion.div
-          className="hero-content"
+          className="hero-photo glass"
+          initial={{ opacity: 0, scale: 0.88, rotate: -4 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          transition={{ duration: 0.9, ease: "easeOut" }}
+        >
+          <div className="photo-glow" />
+          <img src="/profile.png" alt="Portrait of Shashank" />
+          <span className="photo-caption">
+            <span className="status-dot" />
+            Open to opportunities
+          </span>
+        </motion.div>
+
+        <motion.div
+          className="hero-copy"
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
         >
-          <p className="eyebrow">HELLO, I'M</p>
+          <span className="eyebrow hero-eyebrow">
+            <Sparkles size={14} />
+            BCA · Artificial Intelligence & Machine Learning
+          </span>
 
           <h1>
-            Shashank<span>.R</span>
+            Hi, I'm
+            <br />
+            <span className="gradient-text">Shashank .R</span>
           </h1>
 
-          <p className="hero-subtitle">
-            BCA AIML Student &amp; Full Stack Developer
+          <h2>
+            Aspiring Developer <span>·</span> AI & ML Enthusiast
+          </h2>
+
+          <p>
+            I enjoy building useful digital experiences, exploring
+            artificial intelligence, and continuously improving my
+            software development skills.
           </p>
 
-          <p className="hero-description">
-            Passionate about technology, artificial intelligence and
-            building meaningful digital experiences through code.
-          </p>
-
-          <div className="hero-buttons">
-            <a href="#projects" className="primary-button">
-              Explore My Work <ArrowUpRight size={18} />
+          <div className="hero-actions">
+            <a href="#projects" className="button button-primary">
+              Explore My Work <ArrowDown size={17} />
             </a>
-
-            <a href="#contact" className="secondary-button">
+            <a href="#contact" className="button button-secondary">
               Contact Me <Mail size={17} />
             </a>
           </div>
 
-          <div className="hero-location">
+          <div className="social-links">
+            <a
+              href={contact.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              title="GitHub"
+            >
+              <Code2 />
+            </a>
+            <a
+              href={contact.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              title="LinkedIn"
+            >
+              <ExternalLink />
+            </a>
+            <a
+              href={contact.emailLink}
+              aria-label="Email"
+              title="Email"
+            >
+              <Mail />
+            </a>
+            <a
+              href={contact.phoneLink}
+              aria-label="Phone"
+              title="Call me"
+            >
+              <Phone />
+            </a>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="hero-side-card glass"
+          initial={{ opacity: 0, x: 35 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.45 }}
+        >
+          <span className="card-kicker">LET'S CONNECT</span>
+
+          <p>
+            <Mail size={16} />
+            <a href={contact.emailLink}>{contact.email}</a>
+          </p>
+
+          <p>
+            <Phone size={16} />
+            <a href={contact.phoneLink}>{contact.phone}</a>
+          </p>
+
+          <p>
             <MapPin size={16} />
-            Bengaluru, Karnataka, India
-          </div>
-        </motion.div>
+            Bengaluru, India
+          </p>
 
-        <motion.div
-          className="hero-image"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <div className="profile-glow">
-            <img
-              src="/profile.png"
-              alt="Shashank R. profile"
-              className="profile-image"
-            />
-          </div>
-
-          <div className="floating-card">
-            <Code2 size={20} />
-            <div>
-              <strong>Building the Future</strong>
-              <p>One line of code at a time</p>
-            </div>
-          </div>
+          <p>
+            <Code2 size={16} />
+            Building & learning every day
+          </p>
         </motion.div>
       </section>
 
-      {/* ABOUT */}
-      <section className="section about-section" id="about">
+      <div className="scroll-note">
+        <span />
+        SCROLL TO EXPLORE
+        <span />
+      </div>
+
+      <section className="content-section page-width" id="about">
         <SectionHeading
-          eyebrow="GET TO KNOW ME"
-          title="About"
-          highlight="Me"
+          eyebrow="A LITTLE ABOUT ME"
+          title="Curious mind. Builder's mindset."
+          description="A little about my background and what drives me."
         />
 
         <motion.div
-          className="about-content"
+          className="about-card glass"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          <div className="about-text">
-            <h3>
-              Exploring Technology.
-              <br />
-              Building What's Next.
-            </h3>
-
-            <p>
-              I'm Shashank R., a BCA student specializing in Artificial
-              Intelligence and Machine Learning at Aditya Institute of
-              Management and Studies, Bengaluru.
-            </p>
-
-            <p>
-              I'm interested in software development, AI/ML and full-stack
-              web development. I enjoy learning new technologies,
-              developing practical projects and improving my problem-solving
-              skills.
-            </p>
-
-            <p>
-              I'm currently learning React.js and expanding my knowledge
-              of full-stack development while exploring the possibilities
-              of artificial intelligence.
-            </p>
+          <div className="about-icon">
+            <GraduationCap size={36} />
           </div>
 
-          <div className="about-cards">
-            <div className="about-card">
-              <Brain size={25} />
-              <h4>AI & Machine Learning</h4>
-              <p>Exploring intelligent technologies</p>
-            </div>
+          <div>
+            <h3>Learning, building and growing.</h3>
+            <p>
+              I'm a final-year BCA student specializing in Artificial
+              Intelligence and Machine Learning at Aditya Institute
+              of Management and Studies, Bengaluru. I'm interested in
+              software development, web technologies and AI. I enjoy
+              solving problems, experimenting with new tools and
+              working with others to turn ideas into practical projects.
+            </p>
 
-            <div className="about-card">
-              <Code2 size={25} />
-              <h4>Web Development</h4>
-              <p>Building practical web applications</p>
-            </div>
-
-            <div className="about-card">
-              <Terminal size={25} />
-              <h4>Problem Solving</h4>
-              <p>Learning through hands-on projects</p>
-            </div>
-
-            <div className="about-card">
-              <Layers size={25} />
-              <h4>Continuous Learning</h4>
-              <p>Growing my technical skill set</p>
+            <div className="about-facts">
+              <span><strong>BCA</strong> · AIML</span>
+              <span><strong>2024–Present</strong> · Degree</span>
+              <span><strong>4</strong> · Certifications</span>
             </div>
           </div>
         </motion.div>
       </section>
 
-      {/* SKILLS */}
-      <section className="section skills-section" id="skills">
+      <section className="content-section page-width" id="skills">
         <SectionHeading
-          eyebrow="MY EXPERTISE"
-          title="Technical"
-          highlight="Skills"
+          eyebrow="MY TOOLKIT"
+          title="Skills & technologies"
+          description="Technologies I've worked with and skills I'm developing."
         />
 
-        <motion.div
-          className="skills-grid"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
+        <div className="skills-grid">
           {skills.map((skill, index) => (
             <motion.div
-              className="skill-card"
+              className="skill-chip glass"
               key={skill}
-              whileHover={{ y: -7, scale: 1.03 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.06, duration: 0.4 }}
+              whileHover={{ y: -5, scale: 1.035 }}
             >
-              <span className="skill-number">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <Code2 size={21} />
-              <h3>{skill}</h3>
+              <span className="skill-orb" />
+              {skill}
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        <p className="skills-note">
-          Currently learning React.js and strengthening my full-stack
-          development skills.
-        </p>
+        <div className="soft-skills glass">
+          <span>Problem-solving</span>
+          <span>Communication</span>
+          <span>Teamwork</span>
+          <span>Adaptability</span>
+          <span>Time management</span>
+        </div>
       </section>
 
-      {/* PROJECTS */}
-      <section className="section projects-section" id="projects">
+      <section className="content-section page-width" id="projects">
         <SectionHeading
-          eyebrow="WHAT I'VE BUILT"
-          title="My"
-          highlight="Projects"
+          eyebrow="SELECTED WORK"
+          title="Projects I've worked on"
+          description="A selection of projects from my learning and development journey."
         />
 
         <div className="projects-grid">
-          {projects.map((project) => {
-            const ProjectIcon = project.icon;
+          {projects.map((project, index) => (
+            <motion.article
+              className="project-card glass"
+              key={project.number}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.12, duration: 0.6 }}
+              whileHover={{ y: -8, rotateX: 2 }}
+            >
+              <div className="project-top">
+                <span className="project-number">{project.number}</span>
+                <span className="project-status">{project.status}</span>
+              </div>
 
-            return (
-              <motion.article
-                className="project-card"
-                key={project.number}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                whileHover={{ y: -8 }}
+              <span className="project-category">{project.category}</span>
+              <h3>{project.name}</h3>
+              <p>{project.description}</p>
+
+              <div className="tag-list">
+                {project.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+
+              <a
+                href={contact.github}
+                target="_blank"
+                rel="noreferrer"
+                className="project-link"
               >
-                <div className="project-top">
-                  <span className="project-number">
-                    {project.number}
-                  </span>
-                  <ProjectIcon size={27} />
-                </div>
-
-                <span className="project-category">
-                  {project.category}
-                </span>
-
-                <h3>{project.title}</h3>
-
-                <p>{project.description}</p>
-
-                <div className="project-tech">
-                  {project.technologies.map((tech) => (
-                    <span key={tech}>{tech}</span>
-                  ))}
-                </div>
-
-                <div className="project-status">
-                  {project.status}
-                </div>
-              </motion.article>
-            );
-          })}
+                View GitHub <ExternalLink size={15} />
+              </a>
+            </motion.article>
+          ))}
         </div>
       </section>
 
-      {/* EDUCATION */}
-      <section className="section education-section" id="education">
+      <section className="content-section page-width" id="education">
         <SectionHeading
-          eyebrow="MY ACADEMIC BACKGROUND"
-          title="Education &"
-          highlight="Certifications"
+          eyebrow="MY JOURNEY"
+          title="Education"
+          description="My academic background."
         />
 
         <div className="education-grid">
-          <motion.div
-            className="education-card"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <GraduationCap size={30} />
-
-            <span className="card-label">2024 – 2027</span>
-
+          <article className="education-card glass">
+            <span className="education-date">2024 – Present</span>
             <h3>Bachelor of Computer Applications</h3>
-
-            <h4>Artificial Intelligence & Machine Learning</h4>
-
-            <p>Aditya Institute of Management and Studies</p>
-
-            <span className="education-location">
-              Bengaluru, Karnataka
+            <p>Artificial Intelligence & Machine Learning</p>
+            <span>
+              Aditya Institute of Management and Studies · Bengaluru
             </span>
-          </motion.div>
+          </article>
 
-          <motion.div
-            className="certifications-card"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <div className="certification-heading">
-              <Award size={27} />
-              <h3>Certifications</h3>
-            </div>
-
-            {certifications.map((certification, index) => (
-              <div className="certification-item" key={certification}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <p>{certification}</p>
-              </div>
-            ))}
-          </motion.div>
+          <article className="education-card glass">
+            <span className="education-date">2022 – 2024</span>
+            <h3>Pre-University Course</h3>
+            <p>PCMC</p>
+            <span>Jnana Jyothi PU College</span>
+          </article>
         </div>
       </section>
 
-      {/* CONTACT */}
-      <section className="section contact-section" id="contact">
+      <section
+        className="content-section page-width"
+        id="certifications"
+      >
         <SectionHeading
-          eyebrow="GET IN TOUCH"
-          title="Let's Build"
-          highlight="Something Great"
+          eyebrow="CONTINUOUS LEARNING"
+          title="Certifications"
+          description="Courses and certifications completed along the way."
         />
 
+        <div className="cert-grid">
+          {certifications.map((cert, index) => (
+            <motion.div
+              className="cert-card glass"
+              key={cert}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.08 }}
+            >
+              <span className="cert-check">✓</span>
+              <span>{cert}</span>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      <section className="contact-section page-width" id="contact">
         <motion.div
-          className="contact-content"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
+          className="contact-card glass"
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          <h3>Have an idea or opportunity?</h3>
+          <span className="eyebrow">HAVE AN IDEA?</span>
+
+          <h2>
+            Let's create something{" "}
+            <span className="gradient-text">meaningful.</span>
+          </h2>
 
           <p>
-            I'm interested in connecting with people, exploring
-            opportunities and collaborating on meaningful projects.
+            I'm open to connecting, learning and exploring opportunities.
+            Feel free to reach out through any of these channels.
           </p>
 
-          <a href="#home" className="primary-button">
-            Back to Home <ArrowUpRight size={18} />
-          </a>
+          <div className="hero-actions">
+            <a
+              className="button button-primary"
+              href={contact.emailLink}
+            >
+              <Mail size={17} /> Email Me
+            </a>
+
+            <a
+              className="button button-secondary"
+              href={contact.phoneLink}
+            >
+              <Phone size={17} /> Call Me
+            </a>
+
+            <a
+              className="button button-secondary"
+              href={contact.linkedin}
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn <ExternalLink size={16} />
+            </a>
+
+            <a
+              className="button button-secondary"
+              href={contact.github}
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub <Code2 size={16} />
+            </a>
+          </div>
         </motion.div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="footer">
-        <a href="#home" className="logo">
-          SR<span>.</span>
+      <footer className="footer page-width">
+        <a href="#home" className="brand">
+          <span className="brand-mark">S.R</span>
+          <span>Shashank .R</span>
         </a>
 
-        <p>
-          Designed &amp; Built by Shashank.R
-        </p>
+        <span>Designed & built with curiosity.</span>
 
-        <span>© {new Date().getFullYear()} All rights reserved.</span>
+        <span>© {new Date().getFullYear()} Shashank .R</span>
       </footer>
-    </div>
+    </main>
   );
 }
 
